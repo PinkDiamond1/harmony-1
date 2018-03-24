@@ -1,0 +1,33 @@
+.Details {
+  margin-top: 1rem;
+  display: block;
+  text-align: center;
+}
+
+.Details * {
+  font-family: "Open Sans", sans-serif !important;
+  color: black;
+}
+
+.track-title {
+  font-size: 2rem !important;
+}
+
+.track-coverart img {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 2px 2px 5px gray;
+}
+
+@media(max-width: 575.98px) {
+  .track-coverart { padding: 0 10%; }
+}
+
+@media(max-width: 767.98px) {
+  .track-coverart { padding: 0 20%; }
+}
+
+@media(min-width: 768px) {
+  .track-coverart img { width: 15rem; height: 15rem; }
+}

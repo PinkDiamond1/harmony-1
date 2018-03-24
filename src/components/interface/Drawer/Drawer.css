@@ -1,0 +1,13 @@
+.Drawer-links {
+  display: block;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.Drawer-link {
+  margin: 1rem 0;
+}
+
+.Drawer * {
+  background: transparent !important;
+}
