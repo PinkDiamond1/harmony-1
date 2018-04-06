@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Controls from "../interface/Controls/Controls";
-import { Details, Seekbar } from "../interface/Details/Details";
+import { Controls } from "../interface/Controls/Controls";
+import { Details } from "../interface/Details/Details";
 import State from "../../data/State";
 
 /**

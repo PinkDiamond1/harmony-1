@@ -1,14 +1,17 @@
 .Controls {
   position: fixed;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
   padding: 0.8rem 0;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(125,125,125,0.5);
+}
+
+.Controls-buttons {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: white;
-  box-shadow: 0 -2px 10px rgba(125,125,125,0.5);
 }
 
 .primary-button {

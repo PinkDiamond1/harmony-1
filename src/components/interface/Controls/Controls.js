@@ -9,6 +9,7 @@ import RightIcon from "material-ui-icons/SkipNext";
 import ShuffleIcon from "material-ui-icons/Shuffle";
 
 import "./Controls.css";
+import "./Seekbar.css";
 
 // Make the button for a given icon
 const makeButton = (icon, label) => (
@@ -22,20 +23,27 @@ const makeButton = (icon, label) => (
  * or previous songs in the list. It also displays shuffle and repeat icons.
  * @param {Object} props Contains the properties passed down to this component
  */
-const Controls = (props) => {
+export const Controls = (props) => {
   return (
     <div className="Controls">
-
-      {makeButton(<ShuffleIcon />, "Shuffle")}
-      <div>
-        {makeButton(<LeftIcon className="secondary-button" />, "Previous")}
-        {makeButton(<PlayIcon className="primary-button" />, "Play")}
-        {makeButton(<RightIcon className="secondary-button" />, "Next")}
+      
+      <div className="Seekbar">
+        <div className="Seekbar-complete">
+          <div className="Seekbar-filled" style={{ width: "40%" }}></div>
+        </div>
       </div>
-      {makeButton(<RepeatIcon />, "Repeat")}
+
+      <div className="Controls-buttons">
+        {makeButton(<ShuffleIcon />, "Shuffle")}
+        <div>
+          {makeButton(<LeftIcon className="secondary-button" />, "Previous")}
+          {makeButton(<PlayIcon className="primary-button" />, "Play")}
+          {makeButton(<RightIcon className="secondary-button" />, "Next")}
+        </div>
+        {makeButton(<RepeatIcon />, "Repeat")}
+      </div>
 
     </div>
   );
 }
-      
-export default Controls;
+

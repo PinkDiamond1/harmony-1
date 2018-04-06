@@ -1,0 +1,21 @@
+.Seekbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.Seekbar-complete, .Seekbar-filled {
+  background: transparent;
+  height: 5px;
+}
+
+.Seekbar-complete {
+  width: 100%;
+  cursor: pointer;
+}
+
+.Seekbar-filled {
+  margin-top: -1px;
+  background: red;
+}
