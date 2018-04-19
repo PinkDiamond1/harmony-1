@@ -8,7 +8,7 @@ import DownIcon from "material-ui-icons/KeyboardArrowDown";
 
 import { Header } from "../interface/Header/Header";
 import { Tracks } from "../interface/Tracks/Tracks";
-import actionTypes from "../../store/actionTypes";
+import actionTypes from "../../store/action-types";
 
 // transition of the queue dialog
 const QueueTransition = (props) => {
@@ -51,6 +51,8 @@ class Queue extends Component {
           tracks={this.props.tracks}
           delete={this.props.onDeleteTrack}
           change={this.props.onChangeTrack}
+          isPlaying={this.props.isPlaying}
+          togglePlay={this.props.onTogglePlay}
           currentIndex={this.props.currentIndex} />
 
       </Dialog>
@@ -63,6 +65,7 @@ const mapStateToProps = state => {
   return {
     tracks: state.tracksList,
     currentIndex: state.currentIndex,
+    isPlaying: state.isPlaying,
   };
 };
 
@@ -72,6 +75,7 @@ const mapDispatchToProps = dispatch => {
     onAddTrack: () => dispatch({ type: actionTypes.ADD_TRACK }),
     onDeleteTrack: (index) => () => dispatch({ type: actionTypes.DELETE_TRACK, key: index }),
     onChangeTrack: (index) => () => dispatch({ type: actionTypes.CHANGE_TRACK, key: index }),
+    onTogglePlay: () => dispatch({ type: actionTypes.TOGGLE_PLAY }),
   };
 };
 

@@ -1,40 +1,33 @@
-import actionTypes from "./actionTypes";
-import okComputer from "../images/ok-computer.jpg";
-import abbeyRoad from "../images/abbey-road.jpg";
-import hotelCalifornia from "../images/hotel-california.jpg";
+import actionTypes from "./action-types";
+import initialState from "./initial";
+import { 
+  addTrackReducer, 
+  deleteTrackReducer, 
+} from "./reducer-funcs";
 
-// initial state
-const initialState = {
-  tracksList: [
-    { title: "Let Down", artist: "Radiohead", coverart: okComputer },
-    { title: "Here Comes the Sun", artist: "The Beatles", coverart: abbeyRoad }
-  ],
-  currentIndex: 0,
-  shuffle: false,
-  repeat: false
-};
+/**
+ * Change the state values and return the new state
+ * @param {Object} state Is the original state
+ * @param {Object} change Is the key value pair for new values
+ */
+const updateState = (state, change) => (
+  { ...state, ...change }
+);
 
 // reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_TRACK: {
-      let newTrack = { title: "Hotel California", artist: "Eagles", coverart: hotelCalifornia };
-      let updatedTracksList = state.tracksList.slice();
-      updatedTracksList.push(newTrack);
-      return { ...state, tracksList: updatedTracksList };
-    }
+    case actionTypes.ADD_TRACK: 
+      return updateState(state, addTrackReducer(state, action));
   
-    case actionTypes.DELETE_TRACK: {
-      let index = action.key;
-      let updatedTracksList = state.tracksList.slice();
-      updatedTracksList.splice(index, 1);
-      return { ...state, tracksList: updatedTracksList };
-    }
+    case actionTypes.DELETE_TRACK:
+      return updateState(state, deleteTrackReducer(state, action));
 
-    case actionTypes.CHANGE_TRACK: {
-      let index = action.key;
-      return { ...state, currentIndex: index }
-    }
+    case actionTypes.CHANGE_TRACK: 
+      return updateState(state, { currentIndex: action.key, isPlaying: true });
+
+    case actionTypes.TOGGLE_PLAY:
+      return updateState(state, { isPlaying: !state.isPlaying });
 
     default:
       return state;

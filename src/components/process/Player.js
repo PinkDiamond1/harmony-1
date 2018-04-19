@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { Controls } from "../interface/Controls/Controls";
 import { Details } from "../interface/Details/Details";
+import noAlbum from "../../images/no-album.jpg";
 
 /**
  * Player is a stateful component which handles the main screen of the application.
@@ -11,7 +12,17 @@ import { Details } from "../interface/Details/Details";
  */
 class Player extends Component {
   render() {
-    let currentTrack = this.props.tracks[this.props.currentIndex];
+    let currentTrack;
+    if (this.props.tracks.length) {
+      currentTrack = this.props.tracks[this.props.currentIndex];
+    } else {
+      currentTrack = {
+        title: "No track selected",
+        artist: "Please select a track to play",
+        coverart: noAlbum
+      };
+    }
+
     return (
       <div className="container">
         <Details track={currentTrack} />

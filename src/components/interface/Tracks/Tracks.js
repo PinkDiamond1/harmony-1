@@ -21,7 +21,7 @@ export const Tracks = (props) => {
   const tracksList = tracks.map((track, index) => {
     return (
       <span key={index}>
-        <ListItem title={track.title} onClick={props.change(index)}>
+        <ListItem title={track.title}>
           
           <Avatar><img src={track.coverart} alt="Cover Art" /></Avatar>
           <div style={{ marginLeft: "1rem", width: "40%" }}>
@@ -34,13 +34,13 @@ export const Tracks = (props) => {
           </div>
 
           <ListItemSecondaryAction>
-            {props.currentIndex === index
-            ? <IconButton aria-label="Pause">
-                <PauseIcon />
-              </IconButton>
-            : <IconButton aria-label="Play">
-                <PlayIcon />
-              </IconButton>}
+            {props.currentIndex === index && props.isPlaying
+              ? <IconButton aria-label="Pause" onClick={props.togglePlay}>
+                  <PauseIcon />
+                </IconButton>
+              : <IconButton aria-label="Play" onClick={props.change(index)}>
+                  <PlayIcon />
+                </IconButton>}
 
             <IconButton aria-label="Delete" onClick={props.delete(index)}>
               <DeleteIcon />
