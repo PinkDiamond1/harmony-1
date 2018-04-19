@@ -8,6 +8,7 @@ import Typography from "material-ui/Typography";
 
 import DeleteIcon from "material-ui-icons/Delete";
 import PlayIcon from "material-ui-icons/PlayArrow";
+import PauseIcon from "material-ui-icons/Pause";
 
 /**
  * Tracks is a stateless component which shows the list of the songs in the Queue
@@ -20,7 +21,7 @@ export const Tracks = (props) => {
   const tracksList = tracks.map((track, index) => {
     return (
       <span key={index}>
-        <ListItem>
+        <ListItem title={track.title} onClick={props.change(index)}>
           
           <Avatar><img src={track.coverart} alt="Cover Art" /></Avatar>
           <div style={{ marginLeft: "1rem", width: "40%" }}>
@@ -33,10 +34,15 @@ export const Tracks = (props) => {
           </div>
 
           <ListItemSecondaryAction>
-            <IconButton aria-label="Play">
-              <PlayIcon />
-            </IconButton>
-            <IconButton aria-label="Delete">
+            {props.currentIndex === index
+            ? <IconButton aria-label="Pause">
+                <PauseIcon />
+              </IconButton>
+            : <IconButton aria-label="Play">
+                <PlayIcon />
+              </IconButton>}
+
+            <IconButton aria-label="Delete" onClick={props.delete(index)}>
               <DeleteIcon />
             </IconButton>
           </ListItemSecondaryAction>

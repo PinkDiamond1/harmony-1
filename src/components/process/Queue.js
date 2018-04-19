@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import Dialog from "material-ui/Dialog";
 import Slide from 'material-ui/transitions/Slide';
@@ -7,7 +8,7 @@ import DownIcon from "material-ui-icons/KeyboardArrowDown";
 
 import { Header } from "../interface/Header/Header";
 import { Tracks } from "../interface/Tracks/Tracks";
-import State from "../../data/State";
+import actionTypes from "../../store/actionTypes";
 
 // transition of the queue dialog
 const QueueTransition = (props) => {
@@ -24,7 +25,7 @@ class Queue extends Component {
     super(props);
     
     // state of the component
-    this.state = { clicked: true, ...State };
+    this.state = { clicked: true };
   }
 
   // close the queue dialog
@@ -42,14 +43,36 @@ class Queue extends Component {
 
         <Header 
           leftIconClick={this.onCloseQueue} 
+          rightIconClick={this.props.onAddTrack}
           leftIcon={<DownIcon />}
           rightIcon={<AddIcon />} />
 
-        <Tracks tracks={this.state.songsList} />
+        <Tracks 
+          tracks={this.props.tracks}
+          delete={this.props.onDeleteTrack}
+          change={this.props.onChangeTrack}
+          currentIndex={this.props.currentIndex} />
 
       </Dialog>
     );
   }
 };
 
-export default Queue;
+// mapped properties to the component
+const mapStateToProps = state => {
+  return {
+    tracks: state.tracksList,
+    currentIndex: state.currentIndex,
+  };
+};
+
+// mapped dispatch to the component
+const mapDispatchToProps = dispatch => {
+  return {
+    onAddTrack: () => dispatch({ type: actionTypes.ADD_TRACK }),
+    onDeleteTrack: (index) => () => dispatch({ type: actionTypes.DELETE_TRACK, key: index }),
+    onChangeTrack: (index) => () => dispatch({ type: actionTypes.CHANGE_TRACK, key: index }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Queue);

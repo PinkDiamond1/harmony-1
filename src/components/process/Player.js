@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Controls } from "../interface/Controls/Controls";
 import { Details } from "../interface/Details/Details";
-import State from "../../data/State";
 
 /**
  * Player is a stateful component which handles the main screen of the application.
@@ -10,21 +10,23 @@ import State from "../../data/State";
  * currently playing and go to other songs in the songs list.
  */
 class Player extends Component {
-  constructor(props) {
-    super(props);
-
-    // state of the component
-    this.state = State;
-  }
-
   render() {
+    let currentTrack = this.props.tracks[this.props.currentIndex];
     return (
       <div className="container">
-        <Details track={this.state.songsList[this.state.currentIndex]} />
+        <Details track={currentTrack} />
         <Controls />
       </div>
     );
   }
 }
 
-export default Player;
+// mapped properties to the component
+const mapStateToProps = state => {
+  return {
+    tracks: state.tracksList,
+    currentIndex: state.currentIndex,
+  };
+};
+
+export default connect(mapStateToProps)(Player);
