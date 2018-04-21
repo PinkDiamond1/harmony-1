@@ -31,6 +31,7 @@ class Player extends Component {
           track={currentTrack} />
 
         <Controls
+          track={currentTrack}
           shuffle={this.props.shuffle}
           repeat={this.props.repeat}
           change={this.props.onChangeTrack}

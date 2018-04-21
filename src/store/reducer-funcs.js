@@ -7,7 +7,12 @@ import hotelCalifornia from "../images/hotel-california.jpg";
  * @returns {object} Contains the changed properties of the state
  */
 export const addTrackReducer = (state, action) => {
-  let newTrack = { title: "Hotel California", artist: "Eagles", coverart: hotelCalifornia };
+  let newTrack = { 
+    title: "Hotel California", 
+    artist: "Eagles", 
+    coverart: hotelCalifornia,
+    duration: 391000,
+  };
   let updatedCurrentIndex = state.currentIndex < 0 ? 0 : state.currentIndex;
   let updatedTracksList = state.tracksList.slice();
 
@@ -22,6 +27,7 @@ export const addTrackReducer = (state, action) => {
  * @returns {object} change Contains the changed properties of the state
  */
 export const deleteTrackReducer = (state, action) => {
+  // action.key is the index of track to be deleted
   let toDeleteIndex = action.key;
   let updatedCurrentIndex = state.currentIndex;
   let isPlaying = state.isPlaying;
@@ -55,12 +61,19 @@ export const changeTrackReducer = (state, action) => {
   let tracksLength = state.tracksList.length;
   
   // value of action.key can be 0
+  // action.key is the index of the new track
+  // action.skip is the number of tracks to be skipped
   let moveTo = action.hasOwnProperty("key") ? action.key : (
     action.hasOwnProperty("skip")
-      ? (state.currentIndex + action.skip + tracksLength) % tracksLength
+      ? (!state.repeat &&
+          ((state.currentIndex === state.tracksList.length - 1 && action.skip > 0)
+            || (state.currentIndex === 0 && action.skip < 0)))
+        ? state.currentIndex
+        : (state.currentIndex + action.skip + tracksLength) % tracksLength
       : state.currentIndex);
 
-  return { currentIndex: moveTo, isPlaying: true }
+  // if the new track is same as the previous one, playing is stopped
+  return { currentIndex: moveTo, isPlaying: (moveTo !== state.currentIndex) }
 }
 
 /**

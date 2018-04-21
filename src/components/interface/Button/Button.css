@@ -1,0 +1,10 @@
+.primary-button {
+  height: 4rem !important;
+  width: 4rem !important; 
+  margin-top: -0.5rem !important;
+}
+
+.secondary-button {
+  height: 2rem !important;
+  width: 2rem !important;
+}

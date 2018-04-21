@@ -1,6 +1,5 @@
 import React from "react";
 
-import IconButton from "material-ui/IconButton";
 import LeftIcon from "material-ui-icons/SkipPrevious";
 import PauseIcon from "material-ui-icons/Pause";
 import PlayIcon from "material-ui-icons/PlayArrow";
@@ -8,21 +7,9 @@ import RepeatIcon from "material-ui-icons/Repeat";
 import RightIcon from "material-ui-icons/SkipNext";
 import ShuffleIcon from "material-ui-icons/Shuffle";
 
+import { Button } from "../Button/Button";
+import { Seekbar } from "../Seekbar/Seekbar";
 import "./Controls.css";
-import "./Seekbar.css";
-
-// Button stateless component
-const ControlButton = (props) => {
-  let color = props.counter ? "primary" : "default";
-  return (
-    <IconButton 
-      aria-label={props.label} 
-      onClick={props.action} 
-      color={color}>
-      {props.children}
-    </IconButton>
-  );
-};
 
 /**
  * Controls is a stateless component that provides the interface to move to next
@@ -33,56 +20,55 @@ export const Controls = (props) => {
   return (
     <div className="Controls">
       
-      <div className="Seekbar">
-        <div className="Seekbar-complete">
-          <div className="Seekbar-filled" style={{ width: "40%" }}></div>
-        </div>
-      </div>
+      <Seekbar 
+        track={props.track}
+        change={props.change(1)}
+        isPlaying={props.isPlaying} />
 
       <div className="Controls-buttons">
         
-        <ControlButton
+        <Button
           label="Shuffle"
           action={props.toggleShuffle}
           counter={props.shuffle}>
           <ShuffleIcon />
-        </ControlButton>
+        </Button>
 
         <div className="Controls-center-buttons">
           
-          <ControlButton
+          <Button
             label="Previous"
             action={props.change(-1)}>
             <LeftIcon className="secondary-button" />
-          </ControlButton>
+          </Button>
           
           {props.isPlaying
-          ? <ControlButton
+          ? <Button
               label="Pause"
               action={props.togglePlay}>
               <PauseIcon className="primary-button" />
-            </ControlButton>
+            </Button>
 
-          : <ControlButton
+          : <Button
               label="Play"
               action={props.togglePlay}>
               <PlayIcon className="primary-button" />
-            </ControlButton>}
+            </Button>}
 
-          <ControlButton
+          <Button
             label="Next"
             action={props.change(1)}>
             <RightIcon className="secondary-button" />
-          </ControlButton>
+          </Button>
 
         </div>
         
-        <ControlButton
+        <Button
           label="Repeat"
           action={props.toggleRepeat}
           counter={props.repeat}>
           <RepeatIcon />
-        </ControlButton>
+        </Button>
 
       </div>
 

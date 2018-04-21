@@ -16,6 +16,20 @@
 }
 
 .Seekbar-filled {
+  position: relative;
   margin-top: -1px;
   background: red;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.Seekbar-filled::after {
+  content: "";
+  position: absolute;
+  background: red;
+  height: 10px;
+  width: 10px;
+  right: 0;
+  top: -50%;
+  border-radius: 50%;
 }
