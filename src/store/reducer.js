@@ -3,6 +3,8 @@ import initialState from "./initial";
 import { 
   addTrackReducer, 
   deleteTrackReducer, 
+  changeTrackReducer,
+  toggleShuffleReducer,
 } from "./reducer-funcs";
 
 /**
@@ -24,10 +26,16 @@ const reducer = (state = initialState, action) => {
       return updateState(state, deleteTrackReducer(state, action));
 
     case actionTypes.CHANGE_TRACK: 
-      return updateState(state, { currentIndex: action.key, isPlaying: true });
+      return updateState(state, changeTrackReducer(state, action));
 
     case actionTypes.TOGGLE_PLAY:
       return updateState(state, { isPlaying: !state.isPlaying });
+
+    case actionTypes.TOGGLE_SHUFFLE:
+      return updateState(state, toggleShuffleReducer(state, action));
+    
+    case actionTypes.TOGGLE_REPEAT:
+      return updateState(state, { repeat: !state.repeat });
 
     default:
       return state;

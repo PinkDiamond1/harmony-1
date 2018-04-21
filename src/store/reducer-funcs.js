@@ -44,3 +44,63 @@ export const deleteTrackReducer = (state, action) => {
     isPlaying: isPlaying
   };
 }
+
+/**
+ * Reducer to change a track
+ * @param {object} state Is the state of the store
+ * @param {object} action Is the action 
+ * @returns {object} change Contains the changed properties of the state
+ */
+export const changeTrackReducer = (state, action) => {
+  let tracksLength = state.tracksList.length;
+  
+  // value of action.key can be 0
+  let moveTo = action.hasOwnProperty("key") ? action.key : (
+    action.hasOwnProperty("skip")
+      ? (state.currentIndex + action.skip + tracksLength) % tracksLength
+      : state.currentIndex);
+
+  return { currentIndex: moveTo, isPlaying: true }
+}
+
+/**
+ * Reducer to shuffle the tracks
+ * @param {object} state Is the state of the store
+ * @param {object} action Is the action 
+ * @returns {object} change Contains the changed properties of the state
+ */
+export const toggleShuffleReducer = (state, action) => {
+  if (state.shuffle) {
+    return { shuffle: false };
+  } else {
+
+    // shuffle the tracks list
+    let tracks = state.tracksList;
+    let updatedCurrentIndex = state.currentIndex;
+    let isIndexChanged = false;
+
+    for (let i = 0; i < tracks.length; i++) {
+      let range = tracks.length - i;
+      let randomNumber = Math.floor(Math.random() * range) + i;
+
+      // change the currentIndex to the new index
+      if (!isIndexChanged) {
+        if (state.currentIndex === i) {
+          updatedCurrentIndex = randomNumber;
+          isIndexChanged = true;
+        } else if (state.currentIndex === randomNumber) {
+          updatedCurrentIndex = i;
+          isIndexChanged = true;
+        }
+      }
+      
+      [tracks[i], tracks[randomNumber]] = [tracks[randomNumber], tracks[i]];
+    }
+    
+    return { 
+      tracksList: tracks, 
+      currentIndex: updatedCurrentIndex,
+      shuffle: true
+    };
+  }
+}

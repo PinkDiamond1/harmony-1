@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import { Controls } from "../interface/Controls/Controls";
 import { Details } from "../interface/Details/Details";
+import actionTypes from "../../store/action-types";
 import noAlbum from "../../images/no-album.jpg";
 
 /**
@@ -25,8 +26,19 @@ class Player extends Component {
 
     return (
       <div className="container">
-        <Details track={currentTrack} />
-        <Controls />
+      
+        <Details 
+          track={currentTrack} />
+
+        <Controls
+          shuffle={this.props.shuffle}
+          repeat={this.props.repeat}
+          change={this.props.onChangeTrack}
+          isPlaying={this.props.isPlaying}
+          togglePlay={this.props.onTogglePlay}
+          toggleShuffle={this.props.onToggleShuffle}
+          toggleRepeat={this.props.onToggleRepeat} />
+
       </div>
     );
   }
@@ -37,7 +49,20 @@ const mapStateToProps = state => {
   return {
     tracks: state.tracksList,
     currentIndex: state.currentIndex,
+    isPlaying: state.isPlaying,
+    shuffle: state.shuffle,
+    repeat: state.repeat,
   };
 };
 
-export default connect(mapStateToProps)(Player);
+// mapped dispatch to the component
+const mapDispatchToProps = dispatch => {
+  return {
+    onChangeTrack: (skip) => () => dispatch({ type: actionTypes.CHANGE_TRACK, skip: skip }),
+    onTogglePlay: () => dispatch({ type: actionTypes.TOGGLE_PLAY }),
+    onToggleShuffle: () => dispatch({ type: actionTypes.TOGGLE_SHUFFLE }),
+    onToggleRepeat: () => dispatch({ type: actionTypes.TOGGLE_REPEAT }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
